@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebAppCursos.Models.Instructor>
+
+@{
+    ViewData["Title"] = "Intructores";
+}
+
+<h1>Instructores</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Registro</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Especialidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Especialidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Documento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @{
+                    if (item.Estado == true)
+                    {
+                        <span>Activo</span>
+                    }
+                    else
+                    {
+                        <span>Inactivo</span>
+                    }
+                }
+            </td>
+            <td>
+                <a class="btn btn-success "  data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-route-id="@item.ID"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
+                <a class="btn btn-primary"   data-toggle="tooltip" data-placement="top" title="Detalles" asp-action="Details" asp-route-id="@item.ID"><i class="fa fa-list-ul" aria-hidden="true"></i></a> |
+                <a class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Eliminar" asp-action="Delete" asp-route-id="@item.ID"><i class=" fa fa-times"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

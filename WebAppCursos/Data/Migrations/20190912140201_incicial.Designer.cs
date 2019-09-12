@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppCursos.Data;
 
 namespace WebAppCursos.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190912140201_incicial")]
+    partial class incicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,146 +186,6 @@ namespace WebAppCursos.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebAppCursos.Models.Asignacion", b =>
-                {
-                    b.Property<int>("AsignacionID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CursoID");
-
-                    b.Property<DateTime>("Fecha");
-
-                    b.Property<int>("InstructorID");
-
-                    b.HasKey("AsignacionID");
-
-                    b.HasIndex("CursoID");
-
-                    b.HasIndex("InstructorID");
-
-                    b.ToTable("Asignacion");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Categoria", b =>
-                {
-                    b.Property<int>("CategoriaID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<bool>("Estado");
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("CategoriaID");
-
-                    b.ToTable("Categoria");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Curso", b =>
-                {
-                    b.Property<int>("CursoID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoriaID");
-
-                    b.Property<decimal>("Costo");
-
-                    b.Property<byte>("Creditos");
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<bool>("Estado");
-
-                    b.Property<byte>("Horas");
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("CursoID");
-
-                    b.HasIndex("CategoriaID");
-
-                    b.ToTable("Curso");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Inscripcion", b =>
-                {
-                    b.Property<int>("InscripcionID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CursoID");
-
-                    b.Property<int>("EstudianteID");
-
-                    b.Property<DateTime>("Fecha");
-
-                    b.Property<int>("Grado");
-
-                    b.Property<decimal>("Pago");
-
-                    b.HasKey("InscripcionID");
-
-                    b.HasIndex("CursoID");
-
-                    b.HasIndex("EstudianteID");
-
-                    b.ToTable("Inscripcion");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Persona", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Apellidos");
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Documento");
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("Estado");
-
-                    b.Property<DateTime>("FechaNacimiento");
-
-                    b.Property<string>("Nombres");
-
-                    b.Property<string>("Telefono");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Persona");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Persona");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Estudiante", b =>
-                {
-                    b.HasBaseType("WebAppCursos.Models.Persona");
-
-                    b.Property<string>("Codigo");
-
-                    b.HasDiscriminator().HasValue("Estudiante");
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Instructor", b =>
-                {
-                    b.HasBaseType("WebAppCursos.Models.Persona");
-
-                    b.Property<string>("Especialidad");
-
-                    b.HasDiscriminator().HasValue("Instructor");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -366,40 +228,6 @@ namespace WebAppCursos.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Asignacion", b =>
-                {
-                    b.HasOne("WebAppCursos.Models.Curso", "Curso")
-                        .WithMany()
-                        .HasForeignKey("CursoID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WebAppCursos.Models.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Curso", b =>
-                {
-                    b.HasOne("WebAppCursos.Models.Categoria", "Categoria")
-                        .WithMany("Cursos")
-                        .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebAppCursos.Models.Inscripcion", b =>
-                {
-                    b.HasOne("WebAppCursos.Models.Curso", "Curso")
-                        .WithMany()
-                        .HasForeignKey("CursoID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WebAppCursos.Models.Estudiante", "Estudiante")
-                        .WithMany()
-                        .HasForeignKey("EstudianteID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

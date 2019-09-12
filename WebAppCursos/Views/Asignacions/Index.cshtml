@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebAppCursos.Models.Asignacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Asignaciones</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Registro</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Curso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curso.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.Nombres)
+            </td>
+            <td>
+                <a class="btn btn-success " data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-route-id="@item.AsignacionID"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
+                <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Detalles" asp-action="Details" asp-route-id="@item.AsignacionID"><i class="fa fa-list-ul" aria-hidden="true"></i></a> |
+                <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" asp-action="Delete" asp-route-id="@item.AsignacionID"><i class=" fa fa-times"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
